@@ -1,38 +1,42 @@
-import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
- const Card = (props) => {
+function Card({ image, title, boxCount }) {
+  const editPath = `/edit?url=${encodeURIComponent(image)}&name=${encodeURIComponent(
+    title,
+  )}`;
 
-  const Navigate = useNavigate();
   return (
-    <div className="flex justify-center">
-    <div className="w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300  flex justify-between flex-col  ">
-      
-      {/* Image */}
-      <img
-        src={props.image || "https://via.placeholder.com/300x180"}
-        alt="card"
-        className="w-full h-180px object-cover m-10px p-2 rounded-3xl"
-      />
+    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <Link to={editPath} className="block bg-slate-100" aria-label={`Edit ${title}`}>
+        <img
+          src={image}
+          alt={title}
+          loading="lazy"
+          className="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+        />
+      </Link>
 
-      {/* Body */}
-      <div className="p-4">
-        <h2 className="text-lg font-bold text-gray-800">
-          {props.title || "Card Title"}
-        </h2>
-{/* 
-        <p className="text-gray-600 text-sm mt-2">
-          {props.text || "Some quick example text..."}
-        </p> */}
+      <div className="flex flex-1 flex-col p-4">
+        <div className="flex flex-1 items-start justify-between gap-3">
+          <h2 className="line-clamp-2 text-base font-bold leading-snug text-slate-950">
+            {title}
+          </h2>
+          {boxCount ? (
+            <span className="shrink-0 rounded-full bg-cyan-50 px-2.5 py-1 text-xs font-bold text-cyan-700">
+              {boxCount} boxes
+            </span>
+          ) : null}
+        </div>
 
-        <button className="mt-4 bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition" onClick={(e)=>{Navigate(`/edit/?url=${props.image}`)}}>
-          {props.buttonText || "Edit Meme"}
-        </button>
+        <Link
+          to={editPath}
+          className="mt-5 inline-flex items-center justify-center rounded-md bg-slate-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+        >
+          Edit template
+        </Link>
       </div>
-
-    </div>
-    </div>
+    </article>
   );
-};
+}
 
-export default Card
+export default Card;

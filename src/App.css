@@ -1,1 +1,3 @@
-@import "tailwindcss";
+.meme-export-surface {
+  isolation: isolate;
+}
