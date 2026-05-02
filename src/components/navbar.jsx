@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import logo from "../assets/image.png";
+
 const navItems = [
   { label: "Templates", to: "/" },
   { label: "Create", to: "/edit" },
@@ -16,15 +18,37 @@ const getLinkClass = ({ isActive }) =>
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [logoFailed, setLogoFailed] = useState(false);
 
   return (
     <nav className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/95 text-white shadow-sm backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <NavLink to="/" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
-          <span className="grid h-10 w-10 place-items-center rounded-lg bg-pink-500 text-lg font-black text-white">
-            M
-          </span>
-          <span className="text-lg font-black tracking-tight">MemeGen</span>
+        <NavLink
+          to="/"
+          className="flex min-w-0 items-center gap-3"
+          onClick={() => setIsOpen(false)}
+          aria-label="MemeGen home"
+        >
+          {logoFailed ? (
+            <>
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-pink-500 text-lg font-black text-white">
+                M
+              </span>
+              <span className="text-lg font-black tracking-tight">MemeGen</span>
+            </>
+          ) : (
+            <>
+              <img
+                src={logo}
+                alt="MemeGen logo"
+                onError={() => setLogoFailed(true)}
+                className="h-12 w-auto max-w-[120px] rounded-md bg-white object-contain px-2 py-1 shadow-sm sm:h-14 sm:max-w-[150px]"
+              />
+              <span className="hidden text-lg font-black tracking-tight text-white sm:inline">
+                MemeGen
+              </span>
+            </>
+          )}
         </NavLink>
 
         <div className="hidden items-center gap-1 md:flex">
